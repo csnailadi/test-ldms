@@ -1,0 +1,213 @@
+﻿
+Connected to Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 
+Connected as weo@test2
+Logon complete
+Start Date and Time
+
+TO_CHAR(SYSDATE,'DD-MON-YYYYHH24:MI:SS')
+----------------------------------------
+27-May-2021 10:34:42
+Creating Tables...
+
+create table departments (
+Department_Id   number(5)    not null,
+Department_Name varchar2(50) not null,
+Location        varchar2(50) not null)
+
+ORA-00955: name is already used by an existing object
+
+alter table departments
+add (constraint pk_departments primary key (department_id),
+     constraint uq_departments unique (department_name))
+
+ORA-02260: table can have only one primary key
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+
+create table job_titles
+(job_title_id number(5)    not null,
+ job_title    varchar2(50) not null)
+
+ORA-00955: name is already used by an existing object
+
+alter table job_titles
+add (constraint pk_job_title primary key (job_title_id),
+     constraint uq_job_title unique (job_title))
+
+ORA-02260: table can have only one primary key
+
+create table Employees (
+Employee_Id    number(10)   not null,
+Employee_Name  varchar2(50) not null,
+Job_Title_id   number(5)    not null,
+Manager_Id     number(10),
+Date_Hired     date         not null,
+salary         number(10)   not null,
+Department_Id  number(5)    not null)
+
+ORA-00955: name is already used by an existing object
+
+alter table Employees
+add (constraint pk_employees primary key (employee_id),
+     constraint fk01_departments foreign key (department_id) references departments(department_id),
+     constraint fk02_departments foreign key (manager_id) references employees(employee_id),
+     constraint fk03_departments foreign key (job_title_id) references job_titles(job_title_id)
+     )
+
+ORA-02260: table can have only one primary key
+
+create index idx1_employees on employees (manager_id)
+
+ORA-00955: name is already used by an existing object
+
+create index idx2_employees on employees (department_id)
+
+ORA-00955: name is already used by an existing object
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+
+Comment added
+
+Creating Packages...
+
+Package created
+
+
+Package body created
+
+Insert Data
+
+insert into departments (department_id,department_name,location)
+values (1,'Management','London')
+
+ORA-00001: unique constraint (WEO.PK_DEPARTMENTS) violated
+
+insert into departments (department_id,department_name,location)
+values (2,'Engineering','Cardiff')
+
+ORA-00001: unique constraint (WEO.PK_DEPARTMENTS) violated
+
+insert into departments (department_id,department_name,location)
+values (3,'Research & Development','Edinburgh')
+
+ORA-00001: unique constraint (WEO.PK_DEPARTMENTS) violated
+
+insert into departments (department_id,department_name,location)
+values (4,'Sales','Belfast')
+
+ORA-00001: unique constraint (WEO.PK_DEPARTMENTS) violated
+
+Commit complete
+
+
+insert into job_titles (job_title_id,job_title)
+values(1,'CEO')
+
+ORA-00001: unique constraint (WEO.PK_JOB_TITLE) violated
+
+insert into job_titles (job_title_id,job_title)
+values(2,'Manager')
+
+ORA-00001: unique constraint (WEO.PK_JOB_TITLE) violated
+
+insert into job_titles (job_title_id,job_title)
+values(3,'Engineer')
+
+ORA-00001: unique constraint (WEO.PK_JOB_TITLE) violated
+
+insert into job_titles (job_title_id,job_title)
+values(4,'Salesperson')
+
+ORA-00001: unique constraint (WEO.PK_JOB_TITLE) violated
+
+insert into job_titles (job_title_id,job_title)
+values(5,'Secretary')
+
+ORA-00001: unique constraint (WEO.PK_JOB_TITLE) violated
+
+Commit complete
+
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90001,'John Smith',1,null,to_date('01/01/1995','dd/mm/yyyy'),100000,1)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90002,'Jimmy Willis',2,90001,to_date('23/09/03','dd/mm/yy'),52500,4)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90003,'Roxy Jones',4,null,to_date('11/02/17','dd/mm/yy'),35000,4)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90004,'Selwyn Field',4,null,to_date('20/05/15','dd/mm/yy'),32000,4)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90006,'Sarah Phelps',2,90001,to_date('21/03/15','dd/mm/yyyy'), 45000,2)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90005, 'David Hallett',3,90006,to_date('17/04/18','dd/mm/yyyy'),40000,2)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90007,'Louise Harper',3, 90006, to_date('01/01/13','dd/mm/yy'), 47000, 2)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90009,'Gus Jones',2, 90001, to_date('15/05/18','dd/mm/yy'), 50000, 3)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90008,'Tina Hart',3,90009, to_date('28/07/14','dd/mm/yy'), 45000,3)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+insert into employees (Employee_Id,Employee_Name,Job_Title_id,Manager_Id,Date_Hired,salary,Department_Id)
+values (90010,'Mildred Hall', 5,90001,to_date('12/10/96','dd/mm/yy'),35000, 1)
+
+ORA-00001: unique constraint (WEO.PK_EMPLOYEES) violated
+
+Commit complete
+
+Date and Time Finish
+
+TO_CHAR(SYSDATE,'DD-MON-YYYYHH24:MI:SS')
+----------------------------------------
+27-May-2021 10:34:46
+
+*** Install complete! ***
+

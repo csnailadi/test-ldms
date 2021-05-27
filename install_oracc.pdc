@@ -1,0 +1,65 @@
+-- ----------------------------------------------------------------------------
+--
+-- Project: ORACC 
+--
+-- Purpose: Install
+--
+-- Author:  Chandra
+--
+-- Date:    27-May-2021
+--
+-- History:
+--  0.1   Chandra  27-May-2021     Initial version
+-- ----------------------------------------------------------------------------
+spool install_oracc.log
+
+-- Prompt for database passwords
+accept dbname      char prompt 'Enter DATABASE name: '
+accept db_user     char prompt 'Enter DB User name: '
+accept db_user_pw  char prompt 'Enter &&db_user password: ' hide
+conn &&db_user/&&db_user_pw@&&dbname
+prompt Logon complete
+
+-- date/time
+prompt Start Date and Time
+select TO_CHAR(SysDate,'DD-Mon-YYYY HH24:MI:SS') from dual;
+
+set define off;
+
+SET serveroutput ON SIZE 10000000
+
+prompt Creating Tables...
+
+@"create_departments.sql";
+
+@"create_job_titles.sql";
+
+@"create_employees.sql";
+
+
+prompt Creating Packages...
+
+@"oracc.spc";
+
+@"oracc.bdy";
+
+
+prompt Insert Data 
+
+@"insert_departments.sql";
+
+@"insert_job_titles.sql";
+
+@"insert_employees.sql";
+
+
+-- date/time
+prompt Date and Time Finish
+select TO_CHAR(SysDate,'DD-Mon-YYYY HH24:MI:SS') from dual;
+
+prompt
+prompt *** Install complete! ***
+prompt
+
+set define on;
+spool off;
