@@ -9,9 +9,9 @@ Department_Id  number(5)    not null);
 
 alter table Employees 
 add (constraint pk_employees primary key (employee_id),
-     constraint fk01_departments foreign key (department_id) references departments(department_id),
-     constraint fk02_departments foreign key (manager_id) references employees(employee_id),
-     constraint fk03_departments foreign key (job_title_id) references job_titles(job_title_id)
+     constraint fk01_employees foreign key (department_id) references departments(department_id),
+     constraint fk02_employees foreign key (manager_id) references employees(employee_id),
+     constraint fk03_employees foreign key (job_title_id) references job_titles(job_title_id)
      );
      
 create index idx1_employees on employees (manager_id);
